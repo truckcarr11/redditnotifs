@@ -40,7 +40,7 @@ setInterval(function(){
            }
         });
     });
-}, 600000);
+}, 300000);
 
 function sendText(url){
     var mailOptions = {
