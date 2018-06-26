@@ -14,5 +14,8 @@
     "nodemailer": "^4.6.5",
     "snoostorm": "0.0.5",
     "snoowrap": "^1.15.2"
+  },
+  "engines": {
+    "node": "8.11.1"
   }
 }
