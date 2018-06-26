@@ -1,3 +1,4 @@
+var http = require('http');
 require('dotenv').config();
 var nodemailer = require("nodemailer");
 const Snoowrap = require('snoowrap');
