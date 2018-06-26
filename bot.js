@@ -1,4 +1,5 @@
-var http = require('http');
+var express = require("express");
+var app = express();
 require('dotenv').config();
 var nodemailer = require("nodemailer");
 const Snoowrap = require('snoowrap');
@@ -57,7 +58,7 @@ function sendText(url){
     });
 }
   
-var port = process.env.PORT || 3000;
-http.listen(port, function(){
-  console.log('listening on *:' + port);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Running on port: ${ PORT }`);
 });
