@@ -1,4 +1,5 @@
 var express = require("express");
+var http = require('http');
 var app = express();
 require('dotenv').config();
 var nodemailer = require("nodemailer");
@@ -40,7 +41,7 @@ setInterval(function(){
            }
         });
     });
-}, 300000);
+}, 600000);
 
 function sendText(url){
     var mailOptions = {
@@ -57,6 +58,10 @@ function sendText(url){
         }
     });
 }
+
+setInterval(function() {
+    http.get("http://redditnotifs.herokuapp.com");
+}, 300000);
   
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
