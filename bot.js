@@ -1,8 +1,8 @@
 require('dotenv').config();
-var nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const Snoowrap = require('snoowrap');
 
-var smtpTransport = nodemailer.createTransport({
+const smtpTransport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
         user: process.env.FROM_EMAIL,

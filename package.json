@@ -12,7 +12,7 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "nodemailer": "^4.6.5",
+    "nodemailer": "^4.6.7",
     "snoostorm": "0.0.5",
     "snoowrap": "^1.15.2"
   },
