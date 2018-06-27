@@ -1,6 +1,3 @@
-var express = require("express");
-var http = require('http');
-var app = express();
 require('dotenv').config();
 var nodemailer = require("nodemailer");
 const Snoowrap = require('snoowrap');
@@ -8,23 +5,17 @@ const Snoowrap = require('snoowrap');
 var smtpTransport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-        user: "tylerccarr1111@gmail.com",
-        pass: "warcraft24"
+        user: process.env.FROM_EMAIL,
+        pass: process.env.FROM_EMAIL_PASSWORD
     }
 });
 
-var mailOptions = {
-    from: "tylerccarr1111@gmail.com",
-    to: "9853289149@messaging.sprintpcs.com",
-    text: "Hello world ✔",
-}
-
 const r = new Snoowrap({
-    userAgent: 'Subreddit_Exists_Bot',
-    clientId: 'WNcjGRoGdXtMMQ',
-    clientSecret: 've_i33azVVX-thCE2OGx1YP-rd4',
-    username: 'Subreddit_Exists_Bot',
-    password: 'doesnotexist'
+    userAgent: process.env.REDDIT_USER,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    username: process.env.REDDIT_USER,
+    password: process.env.REDDIT_PASS
 });
 
 
@@ -45,8 +36,8 @@ setInterval(function(){
 
 function sendText(url){
     var mailOptions = {
-        from: "tylerccarr1111@gmail.com",
-        to: "9853289149@messaging.sprintpcs.com",
+        from: process.env.FROM_EMAIL,
+        to: process.env.TO_EMAIL,
         text: "Check out this post. " + "http://reddit.com"+ url,
     }
 
@@ -58,12 +49,3 @@ function sendText(url){
         }
     });
 }
-
-setInterval(function() {
-    http.get("http://redditnotifs.herokuapp.com");
-}, 300000);
-  
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Running on port: ${ PORT }`);
-});
