@@ -1,9 +1,10 @@
+const fs = require('fs');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const Snoowrap = require('snoowrap');
 
 const smtpTransport = nodemailer.createTransport({
-    service: "Gmail",
+    service: process.env.SERVICE,
     auth: {
         user: process.env.FROM_EMAIL,
         pass: process.env.FROM_EMAIL_PASSWORD
@@ -22,17 +23,31 @@ const r = new Snoowrap({
 setInterval(function(){
     r.getHot().then(posts => {
         posts.forEach(post => {
-           if(post.subreddit.display_name=='LeagueOfLegends'){
-            sendText(post.permalink);
-           }
-           var currentTime = new Date().getTime();
-           var postedTime = new Date(post.created_utc*1000);
-           if((currentTime-postedTime)<10800000){
-            sendText(post.permalink);
-           }
+            var canSend = true;
+            fs.readFileSync('sentPosts.txt').toString().split('\n').forEach(function(line){ 
+                if(line==post.permalink){
+                    canSend = false;
+                }
+            });
+            if(canSend){
+                if(post.subreddit.display_name=='LeagueOfLegends'){
+                    sendText(post.permalink);
+                }
+                var currentTime = new Date().getTime();
+                var postedTime = new Date(post.created_utc*1000);
+                if((currentTime-postedTime)<10800000){
+                    sendText(post.permalink);
+                }
+            }   
         });
     });
 }, 600000);
+
+setInterval(function(){
+    fs.truncate('sentPosts.txt', 0, function(){
+        console.log('Cleared file.');
+    });
+}, 18000000);
 
 function sendText(url){
     var mailOptions = {
@@ -47,5 +62,8 @@ function sendText(url){
         }else{
             console.log("Message sent.");
         }
+    });
+    fs.appendFile('sentPosts.txt',url + "\n", function(){
+        console.log('Wrote to file.');
     });
 }
