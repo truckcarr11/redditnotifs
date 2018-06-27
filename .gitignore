@@ -1,5 +1,1 @@
-.env
 node_modules
-.gitattributes
-package-lock.json
-Procfile
